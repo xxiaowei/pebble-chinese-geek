@@ -1,21 +1,21 @@
-#include "pebble_os.h"
-#include "pebble_app.h"
-#include "pebble_fonts.h"
+#include "pebble.h"
+
 
 #include "chical.h"
 #include "strtools.h"
 
 
-#define MY_UUID { 0x42, 0x6F, 0x1A, 0x53, 0x91, 0x1E, 0x4C, 0x29, 0x8D, 0xFA, 0x01, 0xD6, 0xFE, 0x9A, 0x46, 0xB4 }
+/*#define MY_UUID { 0x42, 0x6F, 0x1A, 0x53, 0x91, 0x1E, 0x4C, 0x29, 0x8D, 0xFA, 0x01, 0xD6, 0xFE, 0x9A, 0x46, 0xB4 }
 PBL_APP_INFO(MY_UUID,
              "Chinese Geek", "kumkee",
              0, 3, /* App version */
-             DEFAULT_MENU_ICON,
-             APP_INFO_WATCH_FACE);
+             /*DEFAULT_MENU_ICON,
+             APP_INFO_WATCH_FACE);*/
 
-Window window;
+//Window window;
+Window *window;
 
-TextLayer text_gan_layer;
+/*TextLayer text_gan_layer;
 TextLayer text_zhi_layer;
 TextLayer text_ymdh_layer;
 TextLayer text_ke_layer;
@@ -24,7 +24,18 @@ TextLayer text_hexa_layer;
 TextLayer text_gyear_layer;
 TextLayer text_gdate_layer;
 TextLayer text_cdate_layer;
-TextLayer text_wday_layer;
+TextLayer text_wday_layer;*/
+
+TextLayer *text_gan_layer;
+TextLayer *text_zhi_layer;
+TextLayer *text_ymdh_layer;
+TextLayer *text_ke_layer;
+TextLayer *text_hexa_layer;
+
+TextLayer *text_gyear_layer;
+TextLayer *text_gdate_layer;
+TextLayer *text_cdate_layer;
+TextLayer *text_wday_layer;
 
 
 #define tot_length	144
@@ -81,11 +92,13 @@ TextLayer text_wday_layer;
 	layer_add_child(&window.layer, &Layer.layer);
 
 
-void handle_init(AppContextRef ctx) {
+void handle_init() {
 
-  window_init(&window, "Chinese Geek");
-  window_stack_push(&window, true /* Animated */);
-  window_set_background_color(&window, GColorBlack);
+  //window_init(&window, "Chinese Geek");
+  window=window_create();
+  
+  window_stack_push(window, true /* Animated */);
+  window_set_background_color(window, GColorBlack);
 
   resource_init_current_app(&APP_RESOURCES);
 
@@ -175,7 +188,7 @@ void handle_second_tick(AppContextRef ctx, PebbleTickEvent *evt) {
 }
 
 
-void pbl_main(void *params) {
+/*void pbl_main(void *params) {
   PebbleAppHandlers handlers = {
     .init_handler = &handle_init,
     .tick_info = {
@@ -185,4 +198,10 @@ void pbl_main(void *params) {
 
   };
   app_event_loop(params, &handlers);
+}*/
+int main(void) {
+   handle_init();
+  app_event_loop();
 }
+  
+
